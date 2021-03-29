@@ -1,0 +1,54 @@
+{% extends 'money/base_generic.html' %}
+{% block content %}
+
+    <form class="mt-4" method="POST">
+    {% csrf_token %}
+    <h2 class="text-center">Sign Up</h2>
+    {% if messages %}
+        <div class="w-25 m-auto">
+                        {% for message in messages %}
+                            <div class="alert alert-danger text-center">
+                                <span class="fa fa-exclamation-circle"></span>
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+        </div>
+    {% endif %}
+    <div class="row mb-4 mt-4">
+        <div class="col">
+        <div class="form-outline">
+            <input type="text" class="form-control form-control-lg pb-2" name = "fname" />
+            <label class="form-label" for="form3Example1">First name</label>
+        </div>
+        </div>
+        <div class="col">
+        <div class="form-outline">
+            <input type="text" class="form-control form-control-lg pb-2" name = "lname" />
+            <label class="form-label" for="form3Example2">Last name</label>
+        </div>
+        </div>
+    </div>
+
+    <!-- Username input -->
+    <div class="form-outline mb-4">
+        <input type="text" class="form-control form-control-lg pb-2" name = "username" />
+        <label class="form-label" for="form3Example3">Username</label>
+    </div>
+
+    <!-- Email input -->
+    <div class="form-outline mb-4">
+        <input type="email" class="form-control form-control-lg pb-2" name = "email" />
+        <label class="form-label" for="form3Example3">Email address</label>
+    </div>
+
+    <!-- Password input -->
+    <div class="form-outline mb-4">
+        <input type="password" class="form-control form-control-lg pb-2" name = "password" />
+        <label class="form-label" for="form3Example4">Password</label>
+    </div>
+
+    <!-- Submit button -->
+    <button type="submit" class="btn btn-primary btn-block mb-4">Sign up</button>
+
+    
+{% endblock content %}

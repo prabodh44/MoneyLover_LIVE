@@ -1,0 +1,110 @@
+{% extends 'money/base.html' %}
+
+{% block content %}
+
+
+<h1 class="mb-4">Transaction List </h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            {% comment %} EXPENSES TABLE {% endcomment %}
+            
+            <h3 class="mb-4 text-center">Expense List</h3>
+
+             <form action="{% url 'transactions' %}" method="POST">
+    {% csrf_token %}
+    Filter:  <select class="custom-select px-2" name="sortBytransactionTypes">
+        <optgroup label="Expenses">
+            {% for txn_type in transaction_types %}
+                {% if txn_type.isAnExpense == "yes" %}
+                 <option value="{{ txn_type }}"> {{ txn_type }}</option>
+               {% endif %}
+            {% endfor %}
+        </optgroup>
+    </select>
+    <button type="submit" class="btn btn-sm btn-dark">Filter</button>
+   </form>
+{% if expenseQuery %}
+
+    <div class="table-responsive"> 
+        <table class="table table-hover text-danger">
+            <th>#</th>
+            <th>Date</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Amount</th>
+            {% for transaction in expenseQuery %}
+                <tr>
+                    <td> {{ forloop.counter }}</td>
+                    <td> {{ transaction.transaction_date|date:'SHORT_DATE_FORMAT' }}</td>
+                    <td> {{ transaction.transaction_name }}</td>
+                    <td> {{ transaction.transaction_type}}</td>
+                    <td> Rs. {{ transaction.transaction_amount }}</td>
+                </tr>
+            {% endfor %}
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><strong>Total</strong></td>
+                    <td> <strong>Rs. {{ expenseAmount }}</strong></td>
+                </tr>
+        </table>
+    </div>
+
+{% endif %}
+        </div>
+        <div class="col-md-6">
+
+        <h3 class="mb-4 text-center">Income List</h3>
+
+             <form action="{% url 'transactions' %}" method="POST">
+    {% csrf_token %}
+    Filter:  <select class="custom-select px-2" name="sortBytransactionTypes">
+        <optgroup label="Expenses">
+            {% for txn_type in transaction_types %}
+                {% if txn_type.isAnExpense == "no" %}
+                 <option value="{{ txn_type }}"> {{ txn_type }}</option>
+               {% endif %}
+            {% endfor %}
+        </optgroup>
+    </select>
+    <button type="submit" class="btn btn-sm btn-dark">Filter</button>
+   </form>
+
+{% if incomeQuery %}
+    <div class="table-responsive"> 
+        <table class="table table-hover text-success">
+            <th>#</th>
+            <th>Date</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Amount</th>
+            {% for transaction in incomeQuery %}
+                <tr>
+                    <td> {{ forloop.counter }}</td>
+                    <td> {{ transaction.transaction_date|date:'SHORT_DATE_FORMAT' }}</td>
+                    <td> {{ transaction.transaction_name }}</td>
+                    <td> {{ transaction.transaction_type}}</td>
+                    <td> Rs. {{ transaction.transaction_amount }}</td>
+                </tr>
+            {% endfor %}
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><strong>Total</strong></td>
+                    <td> <strong>Rs. {{ incomeAmount }}</strong></td>
+                </tr>
+        </table>
+    </div>
+
+{% endif %}     
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock content %}

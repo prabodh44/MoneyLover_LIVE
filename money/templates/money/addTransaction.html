@@ -1,0 +1,47 @@
+{% extends 'money/base.html' %}
+{% block content %}
+
+<h1 class="mb-3">Add Transaction</h1>
+
+<form action="{% url 'addTransaction' %}" method="POST">
+    {% csrf_token %}
+    <div class="form-outline input-group input-group-lg mb-5 w-75"> 
+        <select class="custom-select px-2" name="txn_type">
+            <optgroup label="Expenses">
+                {% for txn_type in transaction_types|dictsort:"txn_type" %}
+                {% if txn_type.isAnExpense == "yes" %}
+                    <option value="{{ txn_type }}"> {{ txn_type }}</option>
+                {% endif %}
+                {% endfor %}
+            </optgroup>
+
+            <optgroup label="Income">
+                {% for txn_type in transaction_types|dictsort:"txn_type" %}
+                {% if txn_type.isAnExpense == "no" %}
+                    <option value="{{ txn_type }}">{{ txn_type }}</option>
+                {% endif %}
+                {% endfor %}
+            </optgroup>
+        </select>
+        <input
+            type="text"
+            class="form-control"
+            placeholder="Transaction Name"
+            name="txn_name" required
+        />
+        
+    </div>
+
+    <div class="form-outline mb-5 w-75">
+        <input type="text" class="form-control form-control-lg" name="txn_summary" />
+        <label class="form-label" for="formControlLg">Transaction Summary </label>
+    </div>
+
+    <div class="form-outline mb-5 w-75">
+        <input type="number" min="0" class="form-control form-control-lg" name="txn_amount" required />
+        <label class="form-label" for="formControlLg">Transaction Amount *</label>
+    </div>
+
+    <input type="submit" value="Add Transaction" class="btn btn-outline-dark btn-lg"> 
+</form>
+{% endblock content %}

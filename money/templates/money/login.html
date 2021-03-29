@@ -1,0 +1,38 @@
+{% extends 'money/base_generic.html' %}
+{% block content %}
+
+    <form class="mt-4" method="POST">
+    {% csrf_token %}
+    <h2 class="text-center mb-4">Login</h2>
+    {% if messages %}
+        <div class="">
+                        {% for message in messages %}
+                            <div class="alert alert-danger text-center">
+                                <span class="fa fa-exclamation-circle"></span>
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+        </div>
+    {% endif %}
+    <div class="row mb-4 mt-4">
+        
+    <!-- Email input -->
+    <div class="form-outline mb-4">
+        <input type="text" class="form-control form-control-lg pb-2" name="username" />
+        <label class="form-label" for="form3Example3">Username</label>
+    </div>
+
+    <!-- Password input -->
+    <div class="form-outline mb-4">
+        <input type="password" class="form-control form-control-lg pb-2" name="password" />
+        <label class="form-label" for="form3Example4">Password</label>
+    </div>
+
+    <!-- Submit button -->
+    <button type="submit" class="btn btn-primary btn-block mb-4">Login</button>
+
+    <!-- Register buttons -->
+    <div class="text-center">
+        <p> Don't have an account? <a href="{% url 'register' %}">Register</a></p>
+    </form>
+{% endblock content %}

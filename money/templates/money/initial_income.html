@@ -1,0 +1,24 @@
+{% extends 'money/base_generic.html' %}
+{% block content %}
+<h4>Add initial amount in the wallet</h4>
+<form action="{% url 'initial_income' %}" method="POST">
+    {% csrf_token %}
+    
+    <div class="form-outline mb-5 w-75">
+        <input type="text" class="form-control form-control-lg" name="txn_name" />
+        <label class="form-label" for="formControlLg">Transaction Name </label>
+    </div>
+    
+    <div class="form-outline mb-5 w-75">
+        <input type="text" class="form-control form-control-lg" name="txn_summary" />
+        <label class="form-label" for="formControlLg">Transaction Summary </label>
+    </div>
+
+    <div class="form-outline mb-5 w-75">
+        <input type="number" min="0" class="form-control form-control-lg" name="txn_amount" required />
+        <label class="form-label" for="formControlLg">Transaction Amount *</label>
+    </div>
+
+    <input type="submit" value="Add Transaction" class="btn btn-outline-dark btn-lg">
+</form>
+{% endblock content %}

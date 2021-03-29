@@ -1,0 +1,127 @@
+{% extends 'money/base.html' %}
+
+{% block content %}
+<div class="container">
+<h1 class="py-4">Dashboard</h1>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card text-center text-danger">
+                <div class="card-body">
+                    <p class="card-text">
+                        <h1>Rs. {{ expenses }} </h1>
+                    </p>
+                </div>
+                <div class="card-footer text-white bg-danger">
+                    <span class="fas fa-money-bill-wave fa-2x"></span> 
+                    <span class="ml-4"> Expenses  </span>
+                </div>
+                <a href="{% url 'transactions' %}" class="stretched-link"></a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center text-success">
+                <div class="card-body">
+                    <p class="card-text">
+                        <h1>Rs.  {{ incomes }}</h1>
+                    </p>
+                </div>
+                <div class="card-footer text-white bg-success">
+                    <span class="fas fa-money-bill-wave fa-2x"></span> 
+                    <span class="ml-4"> Income  </span>
+                </div>
+                <a href="{% url 'transactions' %}" class="stretched-link"></a>
+            </div>
+        
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-body text-warning">
+                    <p class="card-text">
+                        <h1>Rs.  {{ remaining }}</h1>
+                    </p>
+                </div>
+                <div class="card-footer text-white bg-warning">
+                    <span class="fas fa-money-bill-wave fa-2x"></span> 
+                    <span class="ml-4"> Cash in Hand  </span>
+                </div>
+            </div>
+        
+        </div>
+    </div>
+
+    <div id="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card text-center">
+                <div class="card-body text-warning">
+                    <canvas id="transactionChart" data-url="{% url 'pieChart' %}"></canvas>
+                </div>
+            </div>
+            {% comment %} <div class="col-md-6">
+                <canvas id="transactionChart" data-url="{% url 'pieChart' %}"></canvas>
+            </div>
+            <div class="col-md-6">
+                <canvas id="incomeexpensechart" data-url="{% url 'income_expense_chart' %}"></canvas>
+            </div> {% endcomment %}
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+
+    <script>
+    $(function () {
+        var $incomeExpenseChart = $("#incomeexpensechart")
+        $.ajax({
+            url:$incomeExpenseChart.data("url"),
+            success: function(data){
+                var ctx = $incomeExpenseChart[0].getContext("2d");
+
+                var pieChart = new Chart(ctx, {
+                    type:'pie',
+                    data: {
+                        datasets: [{
+                            data: data.data.transaction_amount__sum,
+                            backgroundColor: [
+                            '#69789', '#fa8080', '#A9A9b6', '#99C0C0', '#D3D983'
+                        ],
+                        label: 'Income-Expenses'
+                        }],
+                        labels: data.labels
+                    }
+                })
+
+            }
+        });
+    })
+
+    $(function (){
+            var $transactionChart = $("#transactionChart");
+            $.ajax({
+                url:$transactionChart.data("url"),
+                success: function (data) {
+                    var ctx = $transactionChart[0].getContext("2d");
+
+                    var pieChart = new Chart(ctx, {
+                        type: 'pie',
+                        data: {
+                datasets: [{
+                        data: data.data,
+                        backgroundColor: [
+                            '#69789', '#fa8080', '#A9A9b6', '#99C0C0', '#D3D983'
+                        ],
+                        label: 'Transactions'
+                    }],
+                    labels: data.labels
+                },
+                options: {
+                responsive: true
+                },
+                easing:'easeInBounce'
+                })
+                }
+            })
+        });
+    </script>
+</div>
+{% endblock content %}

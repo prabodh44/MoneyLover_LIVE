@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.2.0/mdb.min.css" rel="stylesheet" />
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="">
+        <nav class="navbar navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand">MoneyLover</a>
+    <span class="text-white">{{ user }}</span>
+  </div>
+</nav>
+        <div class="row">
+            <div class="col-md-2">
+                <!--Card-->
+                <div class="card mb-4 bg-dark" style="min-height:98vh">
+                    <!--Card content-->
+                    <div class="card-body">
+
+                        <ul class="list-unstyled">
+                            <li class="media">
+                                <div class="media-body">
+                                    <a href="{% url 'index' %}">
+                                        <span class="mt-0 mb-1 font-weight-bold text-white">Dashboard</span>
+                                    </a>
+                                </div>
+                            </li>
+                            
+                            <li class="media my-4">
+                                <div class="media-body">
+                                    <a href="{% url 'addTransaction' %}">
+                                        <span class="mt-0 mb-1 font-weight-bold text-white">Add Transaction</span>
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="media my-4">
+                                <div class="media-body">
+                                    <a href="{% url 'transactionTypes' %}">
+                                        <span class="mt-0 mb-1 font-weight-bold text-white">Add Transaction Types</span>
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="media my-4">
+                                <div class="media-body">
+                                    <a href="{% url 'transactions' %}">
+                                        <span class="mt-0 mb-1 font-weight-bold text-white">Transaction List</span>
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="media my-4">
+                                <div class="media-body">
+                                    <a href="{% url 'logout' %}">
+                                        <span class="mt-0 mb-1 font-weight-bold text-white">Logout</span>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+
+                    </div>
+
+                </div>
+                <!--/.Card-->
+            </div>
+
+            <div class="col-md-10 mt-2">
+
+                {% block content %}
+
+
+                {% endblock content %}
+            </div>
+        </div>
+    </div>
+</nav>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.2.0/mdb.min.js"></script>
+    <!--chart.js --> 
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+</body>
+
+</html>

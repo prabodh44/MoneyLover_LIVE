@@ -1,0 +1,1 @@
+web: gunicorn moneylover.wsgi --log-file -
